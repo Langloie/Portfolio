@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+    <!-- screen window div -->
+<div class="screen">
+    <!-- turn indicator container -->
+    <div class="turnContainer">
+        <!-- player turn -->
+        <div class="playerTurn">Player Turn</div>
+        <!-- enemy turn  -->
+        <div class="enemyTurn">Enemy Turn</div>
+    </div>
+
+    <!-- battle container -->
+    <div class="battle">
+        <!-- hero container -->
+        <div class="heroContainer">
+            <!-- hero -->
+            <div class="heroDiv"><img class="heroSprite" src="hero.gif" alt=""></div>
+            <!-- health bar -->
+            <div class="heroHealth">100</div>
+            <!-- ?mana bar? -->
+            <div class="mana">mana 3</div>
+        </div>
+        <div class="enemyContainerAll">
+            <!-- enemy 1 container -->
+            <div class="enemyContainer1">
+                <!-- enemy sprite -->
+                <div class="enemySprite1"><img class="goblinSprite" src="goblin.gif" alt=""></div>
+                <!-- enemy health bar -->
+                <div class="enemyHealthbar1">100</div>
+            </div>
+            <!-- enemy 2 container -->
+            <div class="enemyContainer2">
+                <!-- enemy sprite -->
+                <div class="enemySprite2"><img class="fishSprite" src="fish.gif" alt=""></div>
+                <!-- enemy health bar -->
+                <div class="enemyHealthbar2">100</div>
+            </div>
+                <!-- enemy 3 container -->
+            <div class="enemyContainer3">
+                <!-- enemy sprite -->
+                <div class="enemySprite3"><img class="scorpionSprite" src="scorpion.gif" alt=""></div>
+                <!-- enemy health bar -->
+                <div class="enemyHealthbar3">100</div>
+            </div>
+        </div>
+    </div>    
+        <!-- ? boss battle after 3 enemies are defeated? -->
+
+    <!-- player menu -->
+    <div class="menuContainer">
+        <!-- attack -->
+        <div class="attack">ATTACK</div>
+            <!-- add a condition to gauge damage or miss? -->
+            <!-- if style.height > 100px, accuracy = 1, damage = 50+height -->
+        <!-- Fire spell -->
+        <div class="fireSpell">FIRE SPELL</div>
+            <!-- mana bar ? -->
+        <!-- potion -->
+        <div class="potion">POTION</div>
+            <!-- limited amount of potions? -->
+        <!-- run -->
+        <div class="run">RUN</div>
+            <!-- only run if low health? -->
+    </div>
+</div>   
+        
+        <script src="app.js"></script>
+    </body>
+</html>
+

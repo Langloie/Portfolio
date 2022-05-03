@@ -8,6 +8,9 @@
 
 
 //enemy attacks player
+//random id if health > 0
+//id angle keyframe towards hero
+//reduce player health
 
 //fire magic attack 
     //an attack that doesnt miss and does a lot of damage
@@ -48,9 +51,9 @@
 //damage: 5
 
 //select who to attack
-//if id === 1, attackenemy()
-//if id === 2, attackenemy()
-//if id === 3, attackenemy()
+//if id === 1, attackenemy(), angle keyframe up 45 degrees
+//if id === 2, attackenemy(), keyframe horizontal
+//if id === 3, attackenemy(), keyframe -45 degrees
 
 //attackenemy(){
 //get enemy id

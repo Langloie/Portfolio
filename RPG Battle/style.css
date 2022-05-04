@@ -147,3 +147,9 @@ body{
 .manaBar::-moz-progress-bar {
         background-color: grey;
       }
+
+/* img{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+} */

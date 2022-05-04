@@ -115,9 +115,9 @@ body{
     width: 256px;
 }
 
-.goblinSprite{
+.cactusSprite{
     height: auto;
-    width: 102px;
+    width: 129px;
 }
 
 .fishSprite{
@@ -129,3 +129,21 @@ body{
     height: auto;
     width: 101px;
 }
+
+.health{
+    background-color: green;
+    margin-bottom: 10px;
+}
+
+.manaBar{
+    background-color: darkcyan;
+      }
+.manaBar::-webkit-progress-bar {
+        background-color: grey;
+      }
+.manaBar::-webkit-progress-value {
+        background-color: darkcyan;
+      }
+.manaBar::-moz-progress-bar {
+        background-color: grey;
+      }

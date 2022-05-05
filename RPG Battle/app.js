@@ -1,33 +1,42 @@
 
 //Characters on screen
-let hero = {
+const hero = {
     health: 100,
     strength: 20,
     turn: true
 }
 
-let scorpion = {
+const scorpion = {
     name: 'scorpion',
     health: 50,
     strength: 10,
     image: 'scorpion.gif'
 }
 
-let fish = {
+const fish = {
     name: 'fish',
     health: 40,
     strength: 15,
     image: 'fish.gif'
 }
 
-let cactus = {
+const cactus = {
     name: 'cactus',
     health: 70,
     strength: 5,
     image: 'cactus.gif'
 }
 
-let enemies = [scorpion, fish, cactus];
+const enemies = [scorpion, fish, cactus];
+
+const enemyHealth1 = document.querySelector('.enemyHealthbar1');
+const enemyHealth2 = document.querySelector('.enemyHealthbar2');
+const enemyHealth3 = document.querySelector('.enemyHealthbar3');
+const targetEnemy1 = document.querySelector('#enemyOne');
+const targetEnemy2 = document.querySelector('#enemyTwo');
+const targetEnemy3 = document.querySelector('#enemyThree');
+const heroMana = document.querySelector('.manaNum');
+const heroLife = document.querySelector('.heroHealth');
 
 //randomly generates characters and their respective health and strength
 let spawnEnemies = () =>{
@@ -57,16 +66,6 @@ let heroAttackEnemy = () =>{
     console.log('Hero attacks enemy.');
     // getClass.classList.toggle('moveRight');
     })
-    let enemyHealth1 = document.querySelector('.enemyHealthbar1');
-    let enemyHealth2 = document.querySelector('.enemyHealthbar2');
-    let enemyHealth3 = document.querySelector('.enemyHealthbar3');
-    let enemyName = document.querySelectorAll('.Sprite');
-    let targetEnemy1 = document.querySelector('#enemyOne');
-    let targetEnemy2 = document.querySelector('#enemyTwo');
-    let targetEnemy3 = document.querySelector('#enemyThree');
-    let target1Attribute = targetEnemy1.getAttribute('id');
-    console.log(target1Attribute);
-    console.log(enemyName[0].style.width)
     targetEnemy1.addEventListener('click',()=>{
         enemyHealth1.innerHTML -=hero.strength;
         enemyAttackHero();
@@ -93,9 +92,6 @@ let heroAttackEnemy = () =>{
 //enemy attack reduces hero health based on respective enemy strength
 let enemyAttackHero = () =>{
     let playerHealth = document.querySelector('.heroHealth');
-    let targetEnemy1 = document.querySelector('#enemyOne');
-    let targetEnemy2 = document.querySelector('#enemyTwo');
-    let targetEnemy3 = document.querySelector('#enemyThree');
     let targetGroup = [targetEnemy1, targetEnemy2, targetEnemy3];
     let randTarget = targetGroup[Math.floor(Math.random() * 3)];
     let attacker = randTarget.getAttribute('src');
@@ -113,10 +109,6 @@ let enemyAttackHero = () =>{
 
 //if all enemies have 0 health, prompt the player has won
 let heroWin = () =>{
-    let enemyHealth1 = document.querySelector('.enemyHealthbar1');
-    let enemyHealth2 = document.querySelector('.enemyHealthbar2');
-    let enemyHealth3 = document.querySelector('.enemyHealthbar3');
-    console.log(enemyHealth1)
     if(enemyHealth1.innerHTML <= 0 && enemyHealth2.innerHTML <= 0 && enemyHealth3.innerHTML <= 0){
         let restart = prompt("You win! Play again? (y to restart)");
         if(restart === 'y'){
@@ -127,7 +119,6 @@ let heroWin = () =>{
 
 //if hero has 0 health, prompt that the player has lost
 let heroLose = () =>{
-    let heroLife = document.querySelector('.heroHealth');
     if(heroLife.innerHTML <= 0){
         let restart = prompt("You lost! Play again? (y to restart)");
         if(restart === 'y'){
@@ -151,12 +142,8 @@ let heroRun = () =>{
 //use fire spell that reduces health of all three enemies by 10
 let heroFireSpell = () =>{
     const clickFireSpell = document.querySelector('.fireSpell');
-    let heroMana = document.querySelector('.manaNum');
     if(heroMana.innerHTML > 0){
     clickFireSpell.addEventListener('click', ()=>{
-        let enemyHealth1 = document.querySelector('.enemyHealthbar1');
-        let enemyHealth2 = document.querySelector('.enemyHealthbar2');
-        let enemyHealth3 = document.querySelector('.enemyHealthbar3');
         enemyHealth1.innerHTML -=10;
         enemyHealth2.innerHTML -=10;
         enemyHealth3.innerHTML -=10;
@@ -165,9 +152,6 @@ let heroFireSpell = () =>{
     })
     }else{
         clickFireSpell.removeEventListener('click', ()=>{
-            let enemyHealth1 = document.querySelector('.enemyHealthbar1');
-            let enemyHealth2 = document.querySelector('.enemyHealthbar2');
-            let enemyHealth3 = document.querySelector('.enemyHealthbar3');
             enemyHealth1.innerHTML -=10;
             enemyHealth2.innerHTML -=10;
             enemyHealth3.innerHTML -=10;
@@ -184,14 +168,36 @@ let heroFireSpell = () =>{
 let heroPotion = () =>{
     const clickPotion = document.querySelector('.potion');
     clickPotion.addEventListener('click', ()=>{
-        let heroLife = document.querySelector('.heroHealth');
         heroLife.innerHTML = Number(heroLife.innerHTML) + 20;
+        console.log('Hero uses potion.')
     })
+}
+
+let noNegative = () =>{
+    if(enemyHealth1.innerHTML < 0){
+        enemyHealth1.innerHTML = 0;
+    }
+    if(enemyHealth2.innerHTML < 0){
+        enemyHealth2.innerHTML = 0;
+    }
+    if(enemyHealth3.innerHTML < 0){
+        enemyHealth3.innerHTML = 0;
+    }
+    if(heroMana.innerHTML < 0){
+        heroMana.innerHTML = 0;
+    }
+    if(heroLife.innerHTML < 0){
+        heroLife.innerHTML = 0;
+    }
+    if(heroLife.innerHTML > 100){
+        heroLife.innerHTML = 100;
+    }
 }
 
 
 
 spawnEnemies();
+noNegative();
 heroAttackEnemy();
 heroFireSpell();
 heroPotion();

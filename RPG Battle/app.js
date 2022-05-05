@@ -71,6 +71,7 @@ let heroAttackEnemy = () =>{
         console.log('here')
         enemyAttackHero();
         noNegative();
+        enemyDespawn();
         heroLose();
         heroWin();
 
@@ -81,6 +82,7 @@ let heroAttackEnemy = () =>{
         console.log('here')
         enemyAttackHero();
         noNegative();
+        enemyDespawn();
         heroLose();
         heroWin();
     })
@@ -88,6 +90,7 @@ let heroAttackEnemy = () =>{
         enemyHealth3.innerHTML -=hero.strength;
         enemyAttackHero();
         noNegative();
+        enemyDespawn();
         heroLose();
         heroWin();
     })
@@ -108,31 +111,35 @@ let enemyAttackHero = () =>{
     let targetGroup = [targetEnemy1, targetEnemy2, targetEnemy3];
 
     //if enemy is dead, it won't attack hero
+    
     if(enemyHealth1.innerHTML <= 0){
-       for(let i =0;i<targetGroup.length;i++){
-           if(targetGroup[i]===targetEnemy1){
-               targetGroup.splice(i,1)
-           }
-       }
+    for(let i =0;i<targetGroup.length;i++){
+        if(targetGroup[i]===targetEnemy1){
+            targetGroup.splice(i,1)
+        }
+    }
     }
 
     if(enemyHealth2.innerHTML <= 0){
         for(let i =0;i<targetGroup.length;i++){
-            if(targetGroup[i]===targetEnemy1){
+            if(targetGroup[i]===targetEnemy2){
                 targetGroup.splice(i,1)
             }
         }
-     }
-     if(enemyHealth3.innerHTML <= 0){
+    }
+    if(enemyHealth3.innerHTML <= 0){
         for(let i =0;i<targetGroup.length;i++){
-            if(targetGroup[i]===targetEnemy1){
+            if(targetGroup[i]===targetEnemy3){
                 targetGroup.splice(i,1)
             }
         }
-     }
+    }
     
     let randTarget = targetGroup[Math.floor(Math.random() * targetGroup.length)];
-    let attacker = randTarget.getAttribute('src');
+    let attacker = '';
+    if(randTarget){
+        attacker = randTarget.getAttribute('src');
+    }           
     if(attacker === 'cactus.gif'){
         playerHealth.innerHTML -=cactus.strength;
     }
@@ -142,6 +149,7 @@ let enemyAttackHero = () =>{
     if(attacker === 'scorpion.gif'){
         playerHealth.innerHTML -=scorpion.strength;
     }
+    
 }
 
 
@@ -190,6 +198,7 @@ let heroFireSpell = () =>{
             console.log('Hero uses fire spell.')
             enemyAttackHero();
             noNegative();
+            enemyDespawn();
             heroLose();
             heroWin();
         }
@@ -224,6 +233,27 @@ let noNegative = () =>{
     }
     if(heroLife.innerHTML > 100){
         heroLife.innerHTML = 100;
+    }
+}
+
+let enemyDespawn = () =>{
+    let despawnEnemy1 = document.querySelector(".cactusSprite");
+    let despawnEnemy2 = document.querySelector(".fishSprite");
+    let despawnEnemy3 = document.querySelector(".scorpionSprite");
+    if(despawnEnemy1 !== null){
+        if(enemyHealth1.innerHTML <=0){
+            despawnEnemy1.style.visibility = "hidden";
+        }
+    }
+    if(despawnEnemy2 !== null){
+        if(enemyHealth2.innerHTML <=0){
+            despawnEnemy2.style.visibility = "hidden";
+        }
+    }
+    if(despawnEnemy3 !== null){
+        if(enemyHealth3.innerHTML <=0){
+            despawnEnemy3.style.visibility = "hidden";
+        }
     }
 }
 

@@ -115,17 +115,17 @@ body{
     width: 256px;
 }
 
-.cactusSprite{
+.cactusSprite, .hiddenClass1{
     height: auto;
     width: 129px;
 }
 
-.fishSprite{
+.fishSprite, .hiddenClass2{
     height: auto;
     width: 90px;
 }
 
-.scorpionSprite{
+.scorpionSprite, .hiddenClass3{
     height: auto;
     width: 101px;
 }
@@ -148,8 +148,3 @@ body{
         background-color: grey;
       }
 
-/* img{
-    display: flex;
-    justify-content: center;
-    align-content: center;
-} */

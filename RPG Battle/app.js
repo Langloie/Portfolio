@@ -1,37 +1,36 @@
-//indicate if its players turn again
-//hide player and enemy turn divs respectively
 
-//prevent action while not attacking
-
-hero = {
+//Characters on screen
+let hero = {
     health: 100,
-    strength: 20
+    strength: 20,
+    turn: true
 }
 
-scorpion = {
+let scorpion = {
     name: 'scorpion',
     health: 50,
     strength: 10,
     image: 'scorpion.gif'
 }
 
-fish = {
+let fish = {
     name: 'fish',
     health: 40,
     strength: 15,
     image: 'fish.gif'
 }
 
-cactus = {
+let cactus = {
     name: 'cactus',
     health: 70,
     strength: 5,
     image: 'cactus.gif'
 }
 
-enemies = [scorpion, fish, cactus];
+let enemies = [scorpion, fish, cactus];
 
-spawnEnemies = () =>{
+//randomly generates characters and their respective health and strength
+let spawnEnemies = () =>{
     for(let i = 0; i<enemies.length;i++){
         let enemyTarget = document.querySelectorAll(".enemyHealthbar");
         let enemyImage = document.querySelectorAll(".Sprite");
@@ -49,11 +48,15 @@ spawnEnemies = () =>{
         }
       }
 }
-spawnEnemies();
 
 
+//hero attack targets a single enemy and a random enemy retaliates
 let heroAttackEnemy = () =>{
-    let playerHealth = document.querySelector('.heroHealth');
+    const clickAttack = document.querySelector('.attack');
+    clickAttack.addEventListener('click',()=>{
+    console.log('Hero attacks enemy.');
+    // getClass.classList.toggle('moveRight');
+    })
     let enemyHealth1 = document.querySelector('.enemyHealthbar1');
     let enemyHealth2 = document.querySelector('.enemyHealthbar2');
     let enemyHealth3 = document.querySelector('.enemyHealthbar3');
@@ -66,90 +69,161 @@ let heroAttackEnemy = () =>{
     console.log(enemyName[0].style.width)
     targetEnemy1.addEventListener('click',()=>{
         enemyHealth1.innerHTML -=hero.strength;
+        enemyAttackHero();
     })
     targetEnemy2.addEventListener('click',()=>{
         enemyHealth2.innerHTML -=hero.strength;
+        enemyAttackHero();
     })
     targetEnemy3.addEventListener('click',()=>{
         enemyHealth3.innerHTML -=hero.strength;
+        enemyAttackHero();
     })
-
-    // targetEnemy3.addEventListener('click',()=>{
-    //     if(enemyName[2] === 'cactus'){
-    //         enemyHealth3.innerHTML -=cactus.strength;
-    //     }
-    //     if(enemyName[2] === 'fish'){
-    //         enemyHealth3.innerHTML -=fish.strength;
-    //     }
-    //     if(enemyName[2] === 'scorpion'){
-    //         enemyHealth3.innerHTML -=scorpion.strength;
-    //     }
-    // })
+    targetEnemy1.removeEventListener('click',()=>{
+        enemyHealth1.innerHTML -=hero.strength;
+    })
+    targetEnemy2.removeEventListener('click',()=>{
+        enemyHealth2.innerHTML -=hero.strength;
+    })
+    targetEnemy3.removeEventListener('click',()=>{
+        enemyHealth3.innerHTML -=hero.strength;
+    })
 }
 
-//hero attack reduces enemy health
-const clickAttack = document.querySelector('.attack');
-clickAttack.addEventListener('click',()=>{
-    console.log('Hero attacks enemy');
-    // getClass.classList.toggle('moveRight');
-    heroAttackEnemy();
-})
+//enemy attack reduces hero health based on respective enemy strength
+let enemyAttackHero = () =>{
+    let playerHealth = document.querySelector('.heroHealth');
+    let targetEnemy1 = document.querySelector('#enemyOne');
+    let targetEnemy2 = document.querySelector('#enemyTwo');
+    let targetEnemy3 = document.querySelector('#enemyThree');
+    let targetGroup = [targetEnemy1, targetEnemy2, targetEnemy3];
+    let randTarget = targetGroup[Math.floor(Math.random() * 3)];
+    let attacker = randTarget.getAttribute('src');
+    if(attacker === 'cactus.gif'){
+        playerHealth.innerHTML -=cactus.strength;
+    }
+    if(attacker === 'fish.gif'){
+        playerHealth.innerHTML -=fish.strength;
+    }
+    if(attacker === 'scorpion.gif'){
+        playerHealth.innerHTML -=scorpion.strength;
+    }
+}
+
+
+//if all enemies have 0 health, prompt the player has won
+let heroWin = () =>{
+    let enemyHealth1 = document.querySelector('.enemyHealthbar1');
+    let enemyHealth2 = document.querySelector('.enemyHealthbar2');
+    let enemyHealth3 = document.querySelector('.enemyHealthbar3');
+    console.log(enemyHealth1)
+    if(enemyHealth1.innerHTML <= 0 && enemyHealth2.innerHTML <= 0 && enemyHealth3.innerHTML <= 0){
+        let restart = prompt("You win! Play again? (y to restart)");
+        if(restart === 'y'){
+            window.location.reload();
+        }
+    }
+}
+
+//if hero has 0 health, prompt that the player has lost
+let heroLose = () =>{
+    let heroLife = document.querySelector('.heroHealth');
+    if(heroLife.innerHTML <= 0){
+        let restart = prompt("You lost! Play again? (y to restart)");
+        if(restart === 'y'){
+            window.location.reload();
+        }
+    }
+}
+
+
+//click run on screen to surrender and restart
+let heroRun = () =>{
+    const clickRun = document.querySelector('.run')
+    clickRun.addEventListener('click',()=>{
+        let restart = prompt("You ran away! Play again? (y to restart)");
+        if(restart === 'y'){
+            window.location.reload();
+        }
+    })
+}
+
+//use fire spell that reduces health of all three enemies by 10
+let heroFireSpell = () =>{
+    const clickFireSpell = document.querySelector('.fireSpell');
+    let heroMana = document.querySelector('.manaNum');
+    if(heroMana.innerHTML > 0){
+    clickFireSpell.addEventListener('click', ()=>{
+        let enemyHealth1 = document.querySelector('.enemyHealthbar1');
+        let enemyHealth2 = document.querySelector('.enemyHealthbar2');
+        let enemyHealth3 = document.querySelector('.enemyHealthbar3');
+        enemyHealth1.innerHTML -=10;
+        enemyHealth2.innerHTML -=10;
+        enemyHealth3.innerHTML -=10;
+        heroMana.innerHTML -=1;
+        console.log('Hero uses fire spell.')
+    })
+    }else{
+        clickFireSpell.removeEventListener('click', ()=>{
+            let enemyHealth1 = document.querySelector('.enemyHealthbar1');
+            let enemyHealth2 = document.querySelector('.enemyHealthbar2');
+            let enemyHealth3 = document.querySelector('.enemyHealthbar3');
+            enemyHealth1.innerHTML -=10;
+            enemyHealth2.innerHTML -=10;
+            enemyHealth3.innerHTML -=10;
+            heroMana.innerHTML -=1;
+            console.log('Hero uses fire spell.')
+        })
+
+    }
+    enemyAttackHero();
+}
+
+
+//hero can heal 20 health by clicking potion on screen
+let heroPotion = () =>{
+    const clickPotion = document.querySelector('.potion');
+    clickPotion.addEventListener('click', ()=>{
+        let heroLife = document.querySelector('.heroHealth');
+        heroLife.innerHTML = Number(heroLife.innerHTML) + 20;
+    })
+}
 
 
 
-//enemy attack reduces hero health
+spawnEnemies();
+heroAttackEnemy();
+heroFireSpell();
+heroPotion();
+heroRun();
+heroLose();
+heroWin();
+
+
+
 
 
 //enemy attacks player
-//random id if health > 0
+    //if old health != new health
+    //random enemy > 0 health attack player
+
 //id angle keyframe towards hero
 //reduce player health
-
-//fire magic attack 
-    //an attack that doesnt miss and does a lot of damage
-    
-
-//potion increase health
-    
-
-//run - lose game and ask to start over
-
-
-//if all enemies health === 0, alert you won the game
-//ask to start over
-
-//if player health === 0, you lose
-//ask to start over
-
-
-//separate function to start over and call in other state functions
-//location.reload()?
 
 
 //hero attacks are charged up and an onclick event determines the power of the attack
 
-//random spawn enemies
-//toggle class list 
 
-//if class === goblin, stats
-//hitpoints: 20
-//damage:5
-
-//if class === skeleton, stats
-//hitpoints: 10
-//damage: 10
-
-//if class === blob, stats
-//hitpoints: 5
-//damage: 5
 
 //select who to attack
 //if id === 1, attackenemy(), angle keyframe up 45 degrees
 //if id === 2, attackenemy(), keyframe horizontal
 //if id === 3, attackenemy(), keyframe -45 degrees
 
-//attackenemy(){
-//get enemy id
-//reduce hitpoints if > 0
+
 //toggle dead if hitpoints = 0
 
+//indicate if its players turn again
+//hide player and enemy turn divs respectively
+
+//prevent action while not your turn

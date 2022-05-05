@@ -57,40 +57,34 @@ let heroAttackEnemy = () =>{
     let enemyHealth1 = document.querySelector('.enemyHealthbar1');
     let enemyHealth2 = document.querySelector('.enemyHealthbar2');
     let enemyHealth3 = document.querySelector('.enemyHealthbar3');
-
+    let enemyName = document.querySelectorAll('.Sprite');
+    let targetEnemy1 = document.querySelector('#enemyOne');
+    let targetEnemy2 = document.querySelector('#enemyTwo');
+    let targetEnemy3 = document.querySelector('#enemyThree');
+    let target1Attribute = targetEnemy1.getAttribute('id');
+    console.log(target1Attribute);
+    console.log(enemyName[0].style.width)
     targetEnemy1.addEventListener('click',()=>{
-        if(enemyName1 === 'cactus'){
-        enemyHealth1.innerHTML -=cactus.strength;
-        }
-        if(enemyName1 === 'fish'){
-            enemyHealth1.innerHTML -=fish.strength;
-        }
-        if(enemyName1 === 'scorpion'){
-            enemyHealth1.innerHTML -=scorpion.strength;
-        }
+        enemyHealth1.innerHTML -=hero.strength;
     })
     targetEnemy2.addEventListener('click',()=>{
-        if(enemyName2 === 'cactus'){
-            enemyHealth2.innerHTML -=cactus.strength;
-        }
-        if(enemyName2 === 'fish'){
-            enemyHealth2.innerHTML -=fish.strength;
-        }
-        if(enemyName2 === 'scorpion'){
-            enemyHealth2.innerHTML -=scorpion.strength;
-        }
+        enemyHealth2.innerHTML -=hero.strength;
     })
     targetEnemy3.addEventListener('click',()=>{
-        if(enemyName3 === 'cactus'){
-            enemyHealth3.innerHTML -=cactus.strength;
-        }
-        if(enemyName3 === 'fish'){
-            enemyHealth3.innerHTML -=fish.strength;
-        }
-        if(enemyName3 === 'scorpion'){
-            enemyHealth3.innerHTML -=scorpion.strength;
-        }
+        enemyHealth3.innerHTML -=hero.strength;
     })
+
+    // targetEnemy3.addEventListener('click',()=>{
+    //     if(enemyName[2] === 'cactus'){
+    //         enemyHealth3.innerHTML -=cactus.strength;
+    //     }
+    //     if(enemyName[2] === 'fish'){
+    //         enemyHealth3.innerHTML -=fish.strength;
+    //     }
+    //     if(enemyName[2] === 'scorpion'){
+    //         enemyHealth3.innerHTML -=scorpion.strength;
+    //     }
+    // })
 }
 
 //hero attack reduces enemy health

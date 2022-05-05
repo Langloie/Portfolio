@@ -68,15 +68,28 @@ let heroAttackEnemy = () =>{
     })
     targetEnemy1.addEventListener('click',()=>{
         enemyHealth1.innerHTML -=hero.strength;
+        console.log('here')
         enemyAttackHero();
+        noNegative();
+        heroLose();
+        heroWin();
+
+
     })
     targetEnemy2.addEventListener('click',()=>{
         enemyHealth2.innerHTML -=hero.strength;
+        console.log('here')
         enemyAttackHero();
+        noNegative();
+        heroLose();
+        heroWin();
     })
     targetEnemy3.addEventListener('click',()=>{
         enemyHealth3.innerHTML -=hero.strength;
         enemyAttackHero();
+        noNegative();
+        heroLose();
+        heroWin();
     })
     targetEnemy1.removeEventListener('click',()=>{
         enemyHealth1.innerHTML -=hero.strength;
@@ -93,7 +106,32 @@ let heroAttackEnemy = () =>{
 let enemyAttackHero = () =>{
     let playerHealth = document.querySelector('.heroHealth');
     let targetGroup = [targetEnemy1, targetEnemy2, targetEnemy3];
-    let randTarget = targetGroup[Math.floor(Math.random() * 3)];
+
+    //if enemy is dead, it won't attack hero
+    if(enemyHealth1.innerHTML <= 0){
+       for(let i =0;i<targetGroup.length;i++){
+           if(targetGroup[i]===targetEnemy1){
+               targetGroup.splice(i,1)
+           }
+       }
+    }
+
+    if(enemyHealth2.innerHTML <= 0){
+        for(let i =0;i<targetGroup.length;i++){
+            if(targetGroup[i]===targetEnemy1){
+                targetGroup.splice(i,1)
+            }
+        }
+     }
+     if(enemyHealth3.innerHTML <= 0){
+        for(let i =0;i<targetGroup.length;i++){
+            if(targetGroup[i]===targetEnemy1){
+                targetGroup.splice(i,1)
+            }
+        }
+     }
+    
+    let randTarget = targetGroup[Math.floor(Math.random() * targetGroup.length)];
     let attacker = randTarget.getAttribute('src');
     if(attacker === 'cactus.gif'){
         playerHealth.innerHTML -=cactus.strength;
@@ -142,25 +180,20 @@ let heroRun = () =>{
 //use fire spell that reduces health of all three enemies by 10
 let heroFireSpell = () =>{
     const clickFireSpell = document.querySelector('.fireSpell');
-    if(heroMana.innerHTML > 0){
+    
     clickFireSpell.addEventListener('click', ()=>{
-        enemyHealth1.innerHTML -=10;
-        enemyHealth2.innerHTML -=10;
-        enemyHealth3.innerHTML -=10;
-        heroMana.innerHTML -=1;
-        console.log('Hero uses fire spell.')
-    })
-    }else{
-        clickFireSpell.removeEventListener('click', ()=>{
+        if(heroMana.innerHTML > 0){
             enemyHealth1.innerHTML -=10;
             enemyHealth2.innerHTML -=10;
             enemyHealth3.innerHTML -=10;
             heroMana.innerHTML -=1;
             console.log('Hero uses fire spell.')
-        })
-
-    }
-    enemyAttackHero();
+            enemyAttackHero();
+            noNegative();
+            heroLose();
+            heroWin();
+        }
+    })
 }
 
 
@@ -195,15 +228,15 @@ let noNegative = () =>{
 }
 
 
-
+alert("Welcome to RPG Battle. To win, you must help our hero to defeat the enemies. You can choose ATTACK and reduce one enemies health by 20. To select which enemy to attack, click the enemy on the battlefield. You can choose FIRE SPELL to reduce the health of every enemy on the field by 10, but you only have enough magic to cast it 3 times. Enemies will attack back if you use ATTACK or FIRE SPELL on them. You can use a potion to restore some health. You can choose RUN if you don't think you can win. When all enemies have 0 health, you win the game. If you lose all of your health, you lose the game.");
 spawnEnemies();
-noNegative();
+// noNegative();
 heroAttackEnemy();
 heroFireSpell();
 heroPotion();
 heroRun();
-heroLose();
-heroWin();
+// heroLose();
+// heroWin();
 
 
 

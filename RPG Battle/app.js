@@ -3,27 +3,26 @@
 const hero = {
     health: 100,
     strength: 20,
-    turn: true
 }
 
 const scorpion = {
     name: 'scorpion',
     health: 50,
-    strength: 10,
+    strength: 15,
     image: 'scorpion.gif'
 }
 
 const fish = {
     name: 'fish',
     health: 40,
-    strength: 15,
+    strength: 20,
     image: 'fish.gif'
 }
 
 const cactus = {
     name: 'cactus',
     health: 70,
-    strength: 5,
+    strength: 10,
     image: 'cactus.gif'
 }
 
@@ -37,8 +36,23 @@ const targetEnemy2 = document.querySelector('#enemyTwo');
 const targetEnemy3 = document.querySelector('#enemyThree');
 const heroMana = document.querySelector('.manaNum');
 const heroLife = document.querySelector('.heroHealth');
+const enemy1progress = document.querySelector('#enemy1progress');
+const enemy2progress = document.querySelector('#enemy2progress');
+const enemy3progress = document.querySelector('#enemy3progress');
+const heroHealthBar = document.querySelector('#heroHealthBar');
+const manaBar = document.querySelector('.manaBar');
+const enemyProgress = [enemy1progress,enemy2progress,enemy3progress];
+
+
+
+//set hero health and mana bars to max
+heroHealthBar.setAttribute('max', hero.health);
+manaBar.setAttribute('max', 3);
+heroHealthBar.setAttribute('value', hero.health);
+manaBar.setAttribute('value', 3);
 
 //randomly generates characters and their respective health and strength
+//fill health bar to max health value of enemy
 let spawnEnemies = () =>{
     for(let i = 0; i<enemies.length;i++){
         let enemyTarget = document.querySelectorAll(".enemyHealthbar");
@@ -46,6 +60,8 @@ let spawnEnemies = () =>{
         let randNum = Math.floor(Math.random() * 3);
         enemyTarget[i].innerHTML = enemies[randNum].health;
         enemyImage[i].setAttribute("src", enemies[randNum].image)
+        enemyProgress[i].setAttribute('max',enemies[randNum].health)
+        enemyProgress[i].setAttribute('value',enemies[randNum].health)
         if(randNum === 0){
             enemyImage[i].style.width = "101px";
         }
@@ -54,9 +70,11 @@ let spawnEnemies = () =>{
         }
         if(randNum === 2){
             enemyImage[i].style.width = "129px";
+            // enemy1progress.setAttribute('max',cactus.health);
         }
       }
 }
+
 
 
 //hero attack targets a single enemy and a random enemy retaliates
@@ -68,7 +86,7 @@ let heroAttackEnemy = () =>{
     })
     targetEnemy1.addEventListener('click',()=>{
         enemyHealth1.innerHTML -=hero.strength;
-        console.log('here')
+        enemy1progress.value -= hero.strength;
         enemyAttackHero();
         noNegative();
         enemyDespawn();
@@ -79,7 +97,7 @@ let heroAttackEnemy = () =>{
     })
     targetEnemy2.addEventListener('click',()=>{
         enemyHealth2.innerHTML -=hero.strength;
-        console.log('here')
+        enemy2progress.value -= hero.strength;
         enemyAttackHero();
         noNegative();
         enemyDespawn();
@@ -88,6 +106,7 @@ let heroAttackEnemy = () =>{
     })
     targetEnemy3.addEventListener('click',()=>{
         enemyHealth3.innerHTML -=hero.strength;
+        enemy3progress.value -= hero.strength;
         enemyAttackHero();
         noNegative();
         enemyDespawn();
@@ -142,12 +161,18 @@ let enemyAttackHero = () =>{
     }           
     if(attacker === 'cactus.gif'){
         playerHealth.innerHTML -=cactus.strength;
+        let heroHealthBar = document.querySelector('#heroHealthBar');
+        heroHealthBar.value -= cactus.strength;
     }
     if(attacker === 'fish.gif'){
         playerHealth.innerHTML -=fish.strength;
+        let heroHealthBar = document.querySelector('#heroHealthBar');
+        heroHealthBar.value -= fish.strength;
     }
     if(attacker === 'scorpion.gif'){
         playerHealth.innerHTML -=scorpion.strength;
+        let heroHealthBar = document.querySelector('#heroHealthBar');
+        heroHealthBar.value -= scorpion.strength;
     }
     
 }
@@ -194,7 +219,11 @@ let heroFireSpell = () =>{
             enemyHealth1.innerHTML -=10;
             enemyHealth2.innerHTML -=10;
             enemyHealth3.innerHTML -=10;
+            enemy1progress.value -= 10;
+            enemy2progress.value -= 10;
+            enemy3progress.value -= 10;
             heroMana.innerHTML -=1;
+            manaBar.value -= 1;
             console.log('Hero uses fire spell.')
             enemyAttackHero();
             noNegative();
@@ -211,6 +240,7 @@ let heroPotion = () =>{
     const clickPotion = document.querySelector('.potion');
     clickPotion.addEventListener('click', ()=>{
         heroLife.innerHTML = Number(heroLife.innerHTML) + 20;
+        heroHealthBar.value += 20;
         console.log('Hero uses potion.')
     })
 }
@@ -269,7 +299,9 @@ heroRun();
 // heroWin();
 
 
-
+//add music ?victory music?lose music?
+//keyframes
+//timimg
 
 
 //enemy attacks player
@@ -289,8 +321,6 @@ heroRun();
 //if id === 2, attackenemy(), keyframe horizontal
 //if id === 3, attackenemy(), keyframe -45 degrees
 
-
-//toggle dead if hitpoints = 0
 
 //indicate if its players turn again
 //hide player and enemy turn divs respectively
